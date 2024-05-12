@@ -41,7 +41,7 @@ class AuthController extends Controller
                     'status' => 'ok',
                     'message' => 'Anda telah berhasil masuk',
                     "reason"=>null,
-                    "token"=>$token,
+                    "data"=>$token,
                 ]);
         }else{
             return response()->json([
