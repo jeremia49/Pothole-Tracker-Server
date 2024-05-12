@@ -10,7 +10,6 @@ class InferenceModel extends Model
 {
     
     use HasFactory;
-    use HasUuids;
 
     protected $table = 'inference';
     protected $keyType = 'string';

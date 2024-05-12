@@ -27,8 +27,12 @@ Route::get('/', function (Request $request) {
 });
 
 Route::get('/inferences', [InferenceController::class, 'show']);
-Route::post('/addInference', [InferenceController::class, 'store']);
+
 
 Route::post("/register",[AuthController::class,"register"]);
-Route::post("/login",[AuthController::class,"login"]);
+Route::post("/login",[AuthController::class,"login"])->name("login");
+
+Route::post("/logout",[AuthController::class,"logout"])->middleware('auth:sanctum');
+
+Route::post('/addInference', [InferenceController::class, 'store'])->middleware('auth:sanctum');;
 

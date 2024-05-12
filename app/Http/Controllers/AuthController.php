@@ -23,7 +23,7 @@ class AuthController extends Controller
                 'status' => 'error',
                 'message'=> "Validation Error!",
                 'reason' => $validator->errors()->messages(),
-            ]);
+            ],400);
         }
 
         $validated = $validator->validated();
@@ -48,7 +48,7 @@ class AuthController extends Controller
                 'status' => 'error',
                 'message' => 'Wrong email / password',
                 "reason"=>null,
-            ]);
+            ],401);
         }
  
     }
@@ -68,7 +68,7 @@ class AuthController extends Controller
                 'status' => 'error',
                 'message'=>"Validation Error!",
                 'reason' => $validator->errors()->messages(),
-            ]);
+            ],400);
         }
 
         $validated = $validator->validated();
@@ -90,9 +90,21 @@ class AuthController extends Controller
                 'status' => 'error',
                 'message' => 'An error occured',
                 "reason"=>null,
-            ]);
+            ],500);
         }
     }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->tokens()->delete();
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'Sukses',
+            "reason"=>null,
+        ]);
+    }
+
 
 
 }

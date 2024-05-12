@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('inference', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string('userid');
+            $table->id();
+            $table->bigInteger('userid');
             $table->text('url');
             $table->string('latitude');
             $table->string('longitude');

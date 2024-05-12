@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InferenceModel;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class InferenceController extends Controller
 {
@@ -21,7 +22,27 @@ class InferenceController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+
         $requests = $request->all();
+
+        $validator = Validator::make($request->all(), [
+            '*.latitude'=>'required',
+            '*.longitude'=>'required',
+            '*.status'=>'required',
+            '*.confidence'=>'nullable',
+            '*.url'=>'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message'=> "Validation Error!",
+                'reason' => $validator->errors()->messages(),
+            ],400);
+        }
+
         try{
 
     //         $png_url = "product-".time().".png";
@@ -29,25 +50,28 @@ class InferenceController extends Controller
 
     // Image::make(file_get_contents($data->base64_image))->save($path); 
 
-            foreach ($requests as $r) {
+            foreach ($validator->validated() as $r) {
                 $inference = new InferenceModel();
-                $inference->userid=$r['userid'];
-                $inference->path_image=$r['path_image'];
+                $inference->userid=$user->id;
+                $inference->url=$r['url'];
                 $inference->latitude=$r['latitude'];
                 $inference->longitude=$r['longitude'];
                 $inference->status=$r['status'];
                 $inference->save();
             }
             
-            return [
-                "status"=>"Berhasil"
-            ];
+            return response()->json([
+                'status' => 'ok',
+                'message' => "Berhasil",
+                "reason"=>null,
+            ]);
 
         }catch(Exception $e){
-            return [
-                "status"=>"Gagal",
-                "pesan"=>$e->getMessage()
-            ];
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                "reason"=>null,
+            ]);
         }
        
     }

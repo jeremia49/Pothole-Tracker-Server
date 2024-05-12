@@ -27,4 +27,14 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    
+    protected function unauthenticated($request, Throwable $exception)
+    {
+        return response()->json([
+            'status' => 'error',
+            'message' => $exception->getMessage(),
+            "reason"=> null,
+        ], 401);
+    }
 }
