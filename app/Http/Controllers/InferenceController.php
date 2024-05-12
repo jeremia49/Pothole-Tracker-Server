@@ -5,10 +5,51 @@ namespace App\Http\Controllers;
 use App\Models\InferenceModel;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class InferenceController extends Controller
 {
+
+
+    public function storeImage(Request $request){
+        if ($request->hasFile('photo')) {
+            try{
+                
+                $path = $request->file('photo')->storePublicly('user_generated_content', 's3');
+                if(!$path){
+                    return response()->json([
+                        'status' => 'error',
+                        'message'=> "Error uploading file",
+                        'reason' => null,
+                    ],500);
+                }
+                
+                return response()->json([
+                    'status' => 'ok',
+                    'message'=> "Sukses",
+                    'reason' => null,
+                    'data'=>Storage::cloud()->url($path)
+                ]);
+
+            }catch(Exception $e){
+                return response()->json([
+                    'status' => 'error',
+                    'message'=> "Error uploading file",
+                    'reason' => $e->getMessage(),
+                ],500);
+            }
+
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message'=> "photo not exist",
+                'reason' => null,
+            ],400);
+        }
+
+    }
+
     /**
      * Display a listing of the resource.
      */

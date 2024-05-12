@@ -40,3 +40,7 @@ Route::post('/addInference', [InferenceController::class, 'store'])->middleware(
 
 Route::get("/me",[AuthController::class,"me"])->middleware('auth:sanctum');
 
+Route::post("/upload",[InferenceController::class,"storeImage"])->middleware('auth:sanctum');
+
+
+
