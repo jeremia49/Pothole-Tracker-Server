@@ -81,7 +81,7 @@ class InferenceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(InferenceModel $inferenceModel)
+    public function show()
     {
         $inferences = InferenceModel::paginate(1000);
         return [
@@ -90,13 +90,15 @@ class InferenceController extends Controller
         ];
     }
 
-    public function showAll(InferenceModel $inferenceModel)
+    public function showAll()
     {
         $inferences = InferenceModel::all();
-        return [
-            "status"=>"Berhasil",
+        return response()->json([
+            'status' => 'ok',
+            'message' => "Berhasil",
+            "reason"=>null,
             "data"=>$inferences,
-        ];
+        ]);
     }
 
     /**

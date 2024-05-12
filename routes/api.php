@@ -35,5 +35,8 @@ Route::post("/login",[AuthController::class,"login"])->name("login");
 
 Route::post("/logout",[AuthController::class,"logout"])->middleware('auth:sanctum');
 
-Route::post('/addInference', [InferenceController::class, 'store'])->middleware('auth:sanctum');;
+Route::post('/addInference', [InferenceController::class, 'store'])->middleware('auth:sanctum');
+
+
+Route::get("/me",[AuthController::class,"me"])->middleware('auth:sanctum');
 
