@@ -24,6 +24,11 @@ class InferenceController extends Controller
         $requests = $request->all();
         try{
 
+    //         $png_url = "product-".time().".png";
+    // $path = public_path().'img/designs/' . $png_url;
+
+    // Image::make(file_get_contents($data->base64_image))->save($path); 
+
             foreach ($requests as $r) {
                 $inference = new InferenceModel();
                 $inference->userid=$r['userid'];

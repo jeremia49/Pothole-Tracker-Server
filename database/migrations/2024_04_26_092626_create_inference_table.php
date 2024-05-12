@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('inference', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->uuid('userid');
-            $table->text('path_image');
+            $table->string('id')->primary();
+            $table->string('userid');
+            $table->text('url');
             $table->string('latitude');
             $table->string('longitude');
             $table->string('status');

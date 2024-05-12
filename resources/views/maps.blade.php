@@ -184,6 +184,7 @@
                         
                         for(let d of data['data']['data']){
                             let tmark =  L.marker([d.latitude, d.longitude])
+                            tmark.bindPopup("ID : "+d['id'])
                             marker.push(tmark);
                             map.addLayer(tmark);
                         }

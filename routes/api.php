@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InferenceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,7 @@ Route::get('/', function (Request $request) {
 
 Route::get('/inferences', [InferenceController::class, 'show']);
 Route::post('/addInference', [InferenceController::class, 'store']);
+
+Route::post("/register",[AuthController::class,"register"]);
+Route::post("/login",[AuthController::class,"login"]);
+
