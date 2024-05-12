@@ -28,6 +28,7 @@ Route::get('/', function (Request $request) {
 
 Route::get('/inferences', [InferenceController::class, 'show']);
 
+Route::get('/allInferences', [InferenceController::class, 'showAll']);
 
 Route::post("/register",[AuthController::class,"register"]);
 Route::post("/login",[AuthController::class,"login"])->name("login");

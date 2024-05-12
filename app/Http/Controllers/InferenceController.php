@@ -32,6 +32,7 @@ class InferenceController extends Controller
             '*.status'=>'required',
             '*.confidence'=>'nullable',
             '*.url'=>'required',
+            '*.timestamp'=>'required',
         ]);
 
 
@@ -57,6 +58,7 @@ class InferenceController extends Controller
                 $inference->latitude=$r['latitude'];
                 $inference->longitude=$r['longitude'];
                 $inference->status=$r['status'];
+                $inference->timestamp=$r['timestamp'];
                 $inference->save();
             }
             
@@ -82,6 +84,15 @@ class InferenceController extends Controller
     public function show(InferenceModel $inferenceModel)
     {
         $inferences = InferenceModel::paginate(1000);
+        return [
+            "status"=>"Berhasil",
+            "data"=>$inferences,
+        ];
+    }
+
+    public function showAll(InferenceModel $inferenceModel)
+    {
+        $inferences = InferenceModel::all();
         return [
             "status"=>"Berhasil",
             "data"=>$inferences,
