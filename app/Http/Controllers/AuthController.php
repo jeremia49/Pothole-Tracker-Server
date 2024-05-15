@@ -41,7 +41,12 @@ class AuthController extends Controller
                     'status' => 'ok',
                     'message' => 'Anda telah berhasil masuk',
                     "reason"=>null,
-                    "data"=>$token,
+                    "data"=>array(
+                        "uid"=>$request->user()->id,
+                        "name"=>$request->user()->name,
+                        "email"=>$request->user()->email,
+                        "access_token"=>$token
+                    ),
                 ]);
         }else{
             return response()->json([
@@ -60,7 +65,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name'=>'required',
             'email'=>'required|email|unique:users,email',
-            'password'=>'required|min:8|max:12',
+            'password'=>'required|min:8|max:128',
         ]);
  
         if ($validator->fails()) {
