@@ -65,8 +65,6 @@ class InferenceController extends Controller
     {
         $user = $request->user();
 
-        $requests = $request->all();
-
         $validator = Validator::make($request->all(), [
             '*.latitude'=>'required',
             '*.longitude'=>'required',
@@ -86,12 +84,6 @@ class InferenceController extends Controller
         }
 
         try{
-
-    //         $png_url = "product-".time().".png";
-    // $path = public_path().'img/designs/' . $png_url;
-
-    // Image::make(file_get_contents($data->base64_image))->save($path); 
-
             foreach ($validator->validated() as $r) {
                 $inference = new InferenceModel();
                 $inference->userid=$user->id;

@@ -58,8 +58,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -82,8 +85,11 @@
             var page=1;
             var marker = new Array();
             var map;
+
+            var markers = L.markerClusterGroup();
+
             $.ajax({
-                url: "/api/inferences?page="+page,
+                url: "/api/allInferences",
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -92,7 +98,11 @@
 
                     setTimeout(function(){
                         marker = new Array();
-                        map = L.map('map').setView([2.964283004846631, 99.0595995064405], 13);
+                        map = L.map('map',{
+                            preferCanvas: true
+                        })
+                        
+                        map.setView([2.964283004846631, 99.0595995064405], 13);
 
                         // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         //     maxZoom: 19,
@@ -105,89 +115,11 @@
                             subdomains:['mt0','mt1','mt2','mt3']
                         }).addTo(map);;
 
-
-                        L.Control.Button1 = L.Control.extend({
-                            options: {
-                                position: 'topright'
-                            },
-                            onAdd: function (map) {
-                                var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-
-                                var button = L.DomUtil.create('a', 'leaflet-control-button', container);
-                                button.text = "Before"
-
-                                L.DomEvent.disableClickPropagation(button);
-
-                                L.DomEvent.on(button, 'click', function(){
-                                    markerDelAgain();
-                                    page -= 1;
-                                    $.ajax({
-                                    url: "/api/inferences?page="+page,
-                                    type: "GET",
-                                    dataType: "json",
-                                    success: function (data){
-                                        for(let d of data['data']['data']){
-                                            let tmark =  L.marker([d.latitude, d.longitude])
-                                            marker.push(tmark);
-                                            map.addLayer(tmark);
-                                        }
-                                    }})
-
-                                });
-
-                                container.title = "Before";
-
-                                return container;
-                            },
-                            onRemove: function(map) {},
-                        });
-                        
-                        new L.Control.Button1().addTo(map);
-
-                        L.Control.Button2 = L.Control.extend({
-                            options: {
-                                position: 'topright'
-                            },
-                            onAdd: function (map) {
-                                var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-
-                                var button = L.DomUtil.create('a', 'leaflet-control-button', container);
-                                button.text = "Next"
-
-                                L.DomEvent.disableClickPropagation(button);
-
-                                L.DomEvent.on(button, 'click', function(){
-                                    markerDelAgain();
-                                    page += 1;
-                                    $.ajax({
-                                    url: "/api/inferences?page="+page,
-                                    type: "GET",
-                                    dataType: "json",
-                                    success: function (data){
-                                        for(let d of data['data']['data']){
-                                            let tmark =  L.marker([d.latitude, d.longitude])
-                                            marker.push(tmark);
-                                            map.addLayer(tmark);
-                                        }
-                                    }})
-
-                                });
-
-                                container.title = "Next";
-
-                                return container;
-                            },
-                            onRemove: function(map) {},
-                        });
-
-                        new L.Control.Button2().addTo(map);
-                        
-                        for(let d of data['data']['data']){
-                            let tmark =  L.marker([d.latitude, d.longitude])
-                            tmark.bindPopup("ID : "+d['id'])
-                            marker.push(tmark);
-                            map.addLayer(tmark);
+                        for(let d of data['data']){
+                            markers.addLayer(L.marker([d.latitude, d.longitude]));
                         }
+
+                        map.addLayer(markers);
 
                     }, 2000);
 
