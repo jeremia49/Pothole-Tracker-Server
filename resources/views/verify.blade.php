@@ -42,7 +42,10 @@
                         <td>{{$inference->status}}</td>
                         <td>{{$inference->timestamp}}</td>
                         <td><img src="{{$inference->url}}" height="150px" width="150px" alt=""></td>
-                        <td>Verifikasi</td>
+                        <td>
+                            <button onclick="location.href='{{route('verifypotholewithid',['id'=>$inference->id])}}'" value="verifikasi" type="submit" class="btn btn-light">Verifikasi</button>
+                            <button onclick="location.href='{{route('rejectpotholewithid',['id'=>$inference->id])}}'" value="verifikasi" type="submit" class="btn btn-light">Tolak</button>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

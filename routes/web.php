@@ -25,6 +25,8 @@ Route::get('/login', function () {
 Route::post('/login', [WebController::class,"login"]);
 Route::get('/settinginference', [WebController::class,"settinginference"])->middleware('auth')->name('settinginference');
 Route::get('/verifypothole', [WebController::class,"verifypothole"])->middleware('auth')->name('verifypothole');
+Route::get('/verifypothole/{id}', [WebController::class,"setPotholeVerified"])->middleware('auth')->name('verifypotholewithid');
+Route::get('/rejectpothole/{id}', [WebController::class,"setPotholeRejected"])->middleware('auth')->name('rejectpotholewithid');
 
 
 Route::get('/maps', function () {

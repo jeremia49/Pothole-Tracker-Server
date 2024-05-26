@@ -57,8 +57,18 @@ class WebController extends Controller
         ]);
     }
 
-    public function setPotholeVerified(Request $request){
-        
+    public function setPotholeVerified(Int $id){
+        $inference = InferenceModel::where('id','=', $id)->first();
+        $inference['isVerified'] = true;
+        $inference->save();
+        return redirect()->back();
+    }
+
+    public function setPotholeRejected(Int $id){
+        $inference = InferenceModel::where('id','=', $id)->first();
+        $inference['isRejected'] = true;
+        $inference->save();
+        return redirect()->back();
     }
 
     /**
