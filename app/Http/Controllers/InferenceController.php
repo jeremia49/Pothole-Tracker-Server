@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InferenceModel;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -125,7 +126,11 @@ class InferenceController extends Controller
 
     public function showAll()
     {
-        $inferences = InferenceModel::all();
+        $inferences = DB::table('inference')
+        ->join('users', 'inference.userid', '=', 'users.id')
+        ->select(DB::raw("`inference`.*, `users`.`name` AS `username`"))
+        ->get();
+
         return response()->json([
             'status' => 'ok',
             'message' => "Berhasil",

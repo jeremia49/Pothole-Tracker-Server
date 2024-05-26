@@ -27,7 +27,9 @@ Route::get('/settinginference', [WebController::class,"settinginference"])->midd
 Route::get('/verifypothole', [WebController::class,"verifypothole"])->middleware('auth')->name('verifypothole');
 Route::get('/verifypothole/{id}', [WebController::class,"setPotholeVerified"])->middleware('auth')->name('verifypotholewithid');
 Route::get('/rejectpothole/{id}', [WebController::class,"setPotholeRejected"])->middleware('auth')->name('rejectpotholewithid');
-
+Route::get('/adminmaps', [WebController::class,"adminmaps"])->middleware('auth')->name('adminmaps');
+Route::get('/deleteinference', [WebController::class,"deleteinference"])->middleware('auth')->name('deleteinference');
+Route::get('/deleteinference/{id}', [WebController::class,"deleteinference"])->middleware('auth')->name('deleteinferencewithid');
 
 Route::get('/maps', function () {
     return view('maps');

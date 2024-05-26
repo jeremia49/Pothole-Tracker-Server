@@ -10,9 +10,9 @@
             <li class="nav-item">
                 <a class="nav-link {{ Route::currentroutenamed('settinginference') ? 'active': ''}}" href="{{route('settinginference')}}">Setting Inference</a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="#">Setting Model</a>
-            </li> -->
+            <li class="nav-item">
+                <a class="nav-link {{ Route::currentroutenamed('adminmaps') ? 'active': ''}}" href="{{route('adminmaps')}}">Setting Inference (Maps)</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link {{ Route::currentroutenamed('verifypothole') ? 'active': ''}}" href="{{route('verifypothole')}}">Verify Pothole</a>
             </li>

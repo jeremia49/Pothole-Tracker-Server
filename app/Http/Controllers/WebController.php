@@ -71,6 +71,16 @@ class WebController extends Controller
         return redirect()->back();
     }
 
+    public function adminmaps(){
+        return view('adminmaps');
+    }
+
+    public function deleteInference(Int $id){
+        $inference = InferenceModel::where('id','=', $id)->first();
+        $inference->delete();
+        return redirect()->back();  
+    }
+
     /**
      * Show the form for creating a new resource.
      */
