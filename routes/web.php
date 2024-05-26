@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('landing');
-});
+})->name('landing');
+
+Route::get('/login', function () {
+    return view('login');
+})->name('loginweb');
+
+Route::post('/login', [WebController::class,"login"]);
+Route::get('/settinginference', [WebController::class,"settinginference"])->middleware('auth')->name('settinginference');
+Route::get('/verifypothole', [WebController::class,"verifypothole"])->middleware('auth')->name('verifypothole');
+
 
 Route::get('/maps', function () {
     return view('maps');

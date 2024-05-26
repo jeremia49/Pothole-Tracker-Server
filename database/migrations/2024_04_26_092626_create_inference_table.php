@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('status');
-            $table->string('timestamp');
+            $table->bigInteger('timestamp');
+            $table->string('streetname')->default('-');
+            $table->boolean('isVerified')->default(false);
+            $table->boolean('isRejected')->default(false);
             $table->timestamps();
         });
     }

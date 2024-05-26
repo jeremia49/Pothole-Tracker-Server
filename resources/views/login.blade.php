@@ -69,17 +69,6 @@
                     <img width="100" height="100" src="{{ Vite::asset('resources/images/1-wo-watermark.png') }}" alt="">
                     <strong>Pothole Tracker</strong>
                 </a>
-                <div class="d-flex justify-content-between float-right">
-                    @if(Auth::check())
-                    <form action="{{route('settinginference')}}" method="GET">
-                        <button onclick="location.href='{{route('settinginference')}}'" value="Login" type="submit" class="btn btn-light">Menu</button>
-                    </form>
-                    @else
-                    <form action="{{route('loginweb')}}" method="GET">
-                        <button onclick="location.href='{{route('loginweb')}}'" value="Login" type="submit" class="btn btn-light">Login</button>
-                    </form>
-                    @endif
-                </div>
             </div>
         </div>
     </header>
@@ -88,17 +77,39 @@
 
         <section class="jumbotron text-center">
             <div class="container">
-                <h1 class="jumbotron-heading">Pothole Tracker</h1>
-                <p class="mt-3 lead text-muted text-justify"> Dengan menggunakan teknologi sensor dan pemetaan, aplikasi ini secara otomatis mengidentifikasi lubang atau kerusakan pada jalan serta memberikan peringatan kepada pengguna melalui ponsel pintar mereka. Dengan begitu, pengemudi dapat menghindari kerusakan pada kendaraan dan memastikan keamanan perjalanan mereka.</p>
-                <p>
-                    <a href="#" class="btn btn-primary my-2">Install Aplikasi (Play Store)</a>
-                    <a href="#" class="btn btn-primary my-2">Install Aplikasi</a>
-                    <a href="{{route('maps')}}" class="btn btn-secondary my-2">Lihat Pemetaan Jalan Rusak</a>
-                </p>
+                <h1 class="jumbotron-heading">Admin Login</h1>
+
+                <br>
+
+                <form method="POST" action="{{route('loginweb')}}">
+                     @csrf
+                    <!-- Email input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label float-left" for="form2Example1">Email address</label>
+                        <input type="email" id="form2Example1" class="form-control" name="email" required />
+                        @error('email')
+                            <div class="mt-2 alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Password input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label float-left" for="form2Example2">Password</label>
+                        <input type="password" id="form2Example2" class="form-control" name="password" required />
+                        @error('password')
+                            <div class="mt-2 alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                        class="btn btn-primary btn-block mb-4"
+                        >Sign in</button>
+                </form>
             </div>
         </section>
 
-    </main>  
+    </main>
 
     <footer class="text-muted bg-light">
         <div class="container">
