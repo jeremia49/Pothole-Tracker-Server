@@ -103,7 +103,7 @@
                             preferCanvas: true
                         })
                         
-                        map.setView([2.964283004846631, 99.0595995064405], 13);
+                        map.setView([2.964283004846631, 99.0595995064405], 10);
 
                         L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}',{
                             maxZoom: 20,
@@ -112,6 +112,7 @@
                         }).addTo(map);
 
                         for(let d of data['data']){
+                            const date = new Date(d.timestamp);
                             markers.addLayer(
                                 L
                                     .marker([d.latitude, d.longitude])
@@ -123,6 +124,11 @@
                                     <img src="${d.url}" width="150px" height="150px"/>
                                     <br>
                                     <b>Submitter : ${d.username}</b>
+                                    <br>
+                                    Timestamp : ${date.toLocaleString()} <br>
+                                    Lat : ${d.latitude} <br>
+                                    Long :  ${d.longitude} <br>
+                                    <a href="https://maps.google.com/?q=${d.latitude},${d.longitude}" target="__blank" >Google Maps Link</a>
                                     `)
                             );
                         }
