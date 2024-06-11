@@ -130,6 +130,7 @@
                                     <br>
                                     <b>Submitter : ${d.username}</b>
                                     <br>
+                                    <button onClick="fetch('{{route('switchstatus')}}/${d.id}');">Switch Status</button><br>
                                     <button onClick="fetch('{{route('deleteinference')}}/${d.id}');">Delete</button>
                                     `)
 

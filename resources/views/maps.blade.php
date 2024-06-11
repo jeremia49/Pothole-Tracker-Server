@@ -65,6 +65,7 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -89,7 +90,7 @@
             var markers = L.markerClusterGroup();
 
             $.ajax({
-                url: "/api/allInferences",
+                url: "/api/allPotholes",
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -111,7 +112,16 @@
                             attribution: 'Data Map disediakan Google Maps &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         }).addTo(map);
 
+                        
+                        var weighted_arr = []
                         for(let d of data['data']){
+                            
+                            if(d.status=="berlubang"){
+                                weighted_arr.push([d.latitude, d.longitude, 1])
+                            }else{
+                                weighted_arr.push([d.latitude, d.longitude, 0.5])
+                            }
+
                             const date = new Date(d.timestamp);
                             markers.addLayer(
                                 L
@@ -132,6 +142,8 @@
                                     `)
                             );
                         }
+
+                        L.heatLayer(weighted_arr, {radius: 20}).addTo(map);
 
                         map.addLayer(markers);
 

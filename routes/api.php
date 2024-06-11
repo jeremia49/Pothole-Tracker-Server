@@ -27,8 +27,15 @@ Route::get('/', function (Request $request) {
 });
 
 Route::get('/inferences', [InferenceController::class, 'show']);
-
 Route::get('/allInferences', [InferenceController::class, 'showAll']);
+Route::get("/paginateInferences",[InferenceController::class,"paginateInferences"]);
+
+
+Route::get("/allPotholes",[InferenceController::class,"getAllPotholes"]);
+
+Route::post("/getInferencesWithMaxAndMin",[InferenceController::class,"getInferencesWithMaxAndMin"]);
+
+
 
 Route::post("/register",[AuthController::class,"register"]);
 Route::post("/login",[AuthController::class,"login"])->name("login");

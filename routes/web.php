@@ -30,6 +30,9 @@ Route::get('/rejectpothole/{id}', [WebController::class,"setPotholeRejected"])->
 Route::get('/adminmaps', [WebController::class,"adminmaps"])->middleware('auth')->name('adminmaps');
 Route::get('/deleteinference', [WebController::class,"deleteinference"])->middleware('auth')->name('deleteinference');
 Route::get('/deleteinference/{id}', [WebController::class,"deleteinference"])->middleware('auth')->name('deleteinferencewithid');
+Route::get('/switchstatus', [WebController::class,"switchstatus"])->middleware('auth')->name('switchstatus');
+Route::get('/switchstatus/{id}', [WebController::class,"switchstatus"])->middleware('auth')->name('switchstatuswithid');
+
 
 Route::get('/maps', function () {
     return view('maps');

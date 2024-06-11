@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\DB;
 
 class WebController extends Controller
 {
+    public function switchstatus(Int $id){
+        $inference = InferenceModel::where('id','=', $id)->first();
+        if($inference === "normal"){
+            $inference['status'] = "berlubang";
+        }else{
+            $inference['status'] = "normal";
+        }
+        $inference->save();
+        return redirect()->back();
+    }
+
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [

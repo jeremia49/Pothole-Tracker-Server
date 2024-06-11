@@ -41,7 +41,7 @@
                         <td>{{$inference->streetname}}</td>
                         <td>{{$inference->status}}</td>
                         <td>{{$inference->timestamp}}</td>
-                        <td><img src="{{$inference->url}}" height="150px" width="150px" alt=""></td>
+                        <td><img loading="lazy" src="{{$inference->url}}" height="150px" width="150px" alt=""></td>
                         <td>Edit | Hapus</td>
                     </tr>
                 @endforeach

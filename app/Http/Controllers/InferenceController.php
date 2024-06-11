@@ -11,6 +11,36 @@ use Illuminate\Support\Facades\Validator;
 
 class InferenceController extends Controller
 {
+    // Route::get("/paginateInferences",[InferenceController::class,"paginateInferences"]);
+    public function paginateInferences(Request $request){
+        $inferences = InferenceModel::paginate(1000);
+        return [
+            'status' => 'ok',
+            'message' => "Berhasil",
+            "reason"=>null,
+            "data"=>$inferences,
+        ];
+    }
+
+
+    public function getInferencesWithMaxAndMin(Request $request){
+        $minid = $request->get("min");
+        $maxid = $request->get("max");
+
+        $inferences = DB::table('inference')
+        ->join('users', 'inference.userid', '=', 'users.id')
+        ->select(DB::raw("`inference`.*, `users`.`name` AS `username`"))
+        ->whereBetween("inference.id", [$minid, $maxid])
+        ->get();
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => "Berhasil",
+            "reason"=>null,
+            "data"=>$inferences,
+        ]);
+
+    }
 
 
     public function storeImage(Request $request){
@@ -129,6 +159,22 @@ class InferenceController extends Controller
         $inferences = DB::table('inference')
         ->join('users', 'inference.userid', '=', 'users.id')
         ->select(DB::raw("`inference`.*, `users`.`name` AS `username`"))
+        ->get();
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => "Berhasil",
+            "reason"=>null,
+            "data"=>$inferences,
+        ]);
+    }
+
+    public function getAllPotholes()
+    {
+        $inferences = DB::table('inference')
+        ->join('users', 'inference.userid', '=', 'users.id')
+        ->select(DB::raw("`inference`.*, `users`.`name` AS `username`"))
+        ->where("status","=","berlubang")
         ->get();
 
         return response()->json([
