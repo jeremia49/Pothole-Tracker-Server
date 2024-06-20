@@ -13,7 +13,7 @@ class InferenceController extends Controller
 {
     // Route::get("/paginateInferences",[InferenceController::class,"paginateInferences"]);
     public function paginateInferences(Request $request){
-        $inferences = InferenceModel::paginate(1000);
+        $inferences = InferenceModel::where("isVerified",1)->paginate(1000);
         return [
             'status' => 'ok',
             'message' => "Berhasil",
