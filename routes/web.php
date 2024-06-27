@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,5 +48,19 @@ Route::get('/privacy-policy', function () {
     return view('pp');
 });
 
+
+Route::get('/delete-account', function (Request $request) {
+    $r = $request->query("email");
+    if(!$r){
+        return view('deleteaccount');
+    }else{
+        $user = User::where('email',$r)->firstOrFail();
+        if($user){
+            $user->delete();
+            return "Success to delete account !";
+        }
+        return "Failed to delete account !";
+    }
+});
 
 // Route::post
