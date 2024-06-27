@@ -42,5 +42,9 @@ Route::get('/maps2', function () {
     return view('maps2');
 });
 
+Route::get('/privacy-policy', function () {
+    return view('pp');
+});
+
 
 // Route::post
